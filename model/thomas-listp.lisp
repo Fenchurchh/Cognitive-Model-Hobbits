@@ -2,15 +2,15 @@
 	(reset-all)
 	(dotimes (i number)
 		;Achtung: Der goal Focus für die einzelnen Durchläufe muss hier gesetzt werden.
-		(goal-focus test-state)
+		(goal-focus test-legalPosition)
 		(run time)
 		(print *decisions*)
 		(print *times*))
 )
 
-(defun save-decision (hl hr ol or)
-	(let ((code (concatenate 'string (write-to-string hl) "H" (write-to-string ol) "O-" (write-to-string hr) "H" (write-to-string or) "O"))
-		  (judge (if (or (< hl ol) (< hr or)) 0 1)))
+(defun save-decision (hl hobbitsRight orcsLeft or)
+	(let ((code (concatenate 'string (write-to-string hl) "H" (write-to-string orcsLeft) "O-" (write-to-string hobbitsRight) "H" (write-to-string or) "O"))
+		  (judge (if (or (< hobbitsLeft orcsLeft) (< hobbitsRight or)) 0 1)))
 		(setf *decisions* (acons code judge *decisions*)))
 )
 
@@ -33,28 +33,28 @@
 (sgp :esc t :lf .05 :trace-detail high)
 
 
-(chunk-type state hl hr ol or boat)
+(chunk-type legalPosition hobbitsLeft hobbitsRight orcsLeft orcsRight boat)
 (chunk-type count-order first second)				;um den Slot 'boat' erweitert
 (chunk-type add arg1 arg2)
 (chunk-type sub arg1 arg2)
-(chunk-type schaff-es hl hr ol or boat status)
+(chunk-type schaff-es hobbitsLeft hobbitsRight orcsLeft orcsRight boat state)
 
 (add-dm
-	(s320 ISA state hl 3 hr 0 ol 2 or 1 boat 0)	;hier sind nur die legalen Züge des Problemraums von Studie Seite 259 gelistet,
-	(s331 ISA state hl 3 hr 0 ol 3 or 0 boat 1)	;die illegalen müssten am besten über eine Produktionsregel laufen, 
-	(s220 ISA state hl 2 hr 1 ol 2 or 1 boat 0)	;welche z.B. "nein-nein" ausgibt und in einen vorherigen
-	(s310 ISA state hl 3 hr 0 ol 1 or 2 boat 0)	;oder irgendwie verbundenen 'legalen' Bufferzustand 'zurückkehrt 
-	(s321 ISA state hl 3 hr 0 ol 2 or 1 boat 1)	;oder wir schreiben ALLE Zustände in das DM, da hab ich grad keinen Bock zu 
-	(s300 ISA state hl 3 hr 0 ol 0 or 3 boat 0)	;und ist vielleicht/wahrscheinlich auch nicht nötig!
-	(s311 ISA state hl 3 hr 0 ol 1 or 2 boat 1)
-	(s110 ISA state hl 1 hr 2 ol 1 or 2 boat 0)	;der goal-focus setzt bei chunk 331 an
-	(s221 ISA state hl 2 hr 1 ol 2 or 1 boat 1)
-	(s020 ISA state hl 0 hr 3 ol 2 or 1 boat 0)
-	(s031 ISA state hl 0 hr 3 ol 3 or 0 boat 1)
-	(s010 ISA state hl 0 hr 3 ol 1 or 2 boat 0)
-	(s021 ISA state hl 0 hr 3 ol 2 or 1 boat 1)
-	(s111 ISA state hl 1 hr 2 ol 2 or 1 boat 1)
-	(s000 ISA state hl 0 hr 3 ol 0 or 3 boat 0)
+	(s320 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 2 orcsRight 1 boat 0)	;hier sind nur die legalen Züge des Problemraums von Studie Seite 259 gelistet,
+	(s331 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 3 orcsRight 0 boat 1)	;die illegalen müssten am besten über eine Produktionsregel laufen, 
+	(s220 ISA legalPosition hobbitsLeft 2 hobbitsRight 1 orcsLeft 2 orcsRight 1 boat 0)	;welche z.B. "nein-nein" ausgibt und in einen vorherigen
+	(s310 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 1 orcsRight 2 boat 0)	;oder irgendwie verbundenen 'legalen' Bufferzustand 'zurückkehobbitsRightt 
+	(s321 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 2 orcsRight 1 boat 1)	;oder wir schobbitsRighteiben ALLE Zustände in das DM, da hab ich grad keinen Bock zu 
+	(s300 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 0 orcsRight 3 boat 0)	;und ist vielleicht/wahobbitsRightscheinlich auch nicht nötig!
+	(s311 ISA legalPosition hobbitsLeft 3 hobbitsRight 0 orcsLeft 1 orcsRight 2 boat 1)
+	(s110 ISA legalPosition hobbitsLeft 1 hobbitsRight 2 orcsLeft 1 orcsRight 2 boat 0)	;der goal-focus setzt bei chunk 331 an
+	(s221 ISA legalPosition hobbitsLeft 2 hobbitsRight 1 orcsLeft 2 orcsRight 1 boat 1)
+	(s020 ISA legalPosition hobbitsLeft 0 hobbitsRight 3 orcsLeft 2 orcsRight 1 boat 0)
+	(s031 ISA legalPosition hobbitsLeft 0 hobbitsRight 3 orcsLeft 3 orcsRight 0 boat 1)
+	(s010 ISA legalPosition hobbitsLeft 0 hobbitsRight 3 orcsLeft 1 orcsRight 2 boat 0)
+	(s021 ISA legalPosition hobbitsLeft 0 hobbitsRight 3 orcsLeft 2 orcsRight 1 boat 1)
+	(s111 ISA legalPosition hobbitsLeft 1 hobbitsRight 2 orcsLeft 2 orcsRight 1 boat 1)
+	(s000 ISA legalPosition hobbitsLeft 0 hobbitsRight 3 orcsLeft 0 orcsRight 3 boat 0)
 	(a ISA count-order first 0 second 1)
     (b ISA count-order first 1 second 2)
     (c ISA count-order first 2 second 3)
@@ -68,29 +68,30 @@
     (sub-goal3 ISA sub arg1 2 arg2 2)
     (sub-goal4 ISA sub arg1 2 arg2 1)
     (sub-goal5 ISA sub arg1 1 arg2 1)
-    (goal ISA schaff-es hl 3 hr 0 ol 3 or 0 boat 1 status)
+
+    (goal ISA positionStart hobbitsLeft 3 hobbitsRight 0 orcLinks 3 orcsRight 0 boat 1 state)
  )
 
 (p start
    =goal>
-		ISA         	state
+		ISA         	positionStart
 		hl				=hl
-		hr				=hr
-		ol				=ol
+		hobbitsRight				=hobbitsRight
+		orcsLeft				=orcsLeft
 		or				=or
 ==>
    =goal>
    +imaginal>
-   		isa 			state
+   		isa 			legalPosition
 		hl				=hl
-		hr				=hr
-		ol				=ol
+		hobbitsRight				=hobbitsRight
+		orcsLeft				=orcsLeft
 		or				=or
 )
 
 (p zwischenzustand1
 	=imaginal>
-		ISA 			state
+		ISA 			legalPosition
 		hl				=hl
 ==>
 	+retrieval>
@@ -127,10 +128,10 @@
 
 (p test
    =goal>
-		ISA         	state
+		ISA         	legalPosition
 		hl				=hl
-		hr				=hl
-		ol				=hl
+		hobbitsRight				=hl
+		orcsLeft				=hl
 		or				=hl
 	==>
 	!eval! (save-decision =hl =hl =hl =hl)
