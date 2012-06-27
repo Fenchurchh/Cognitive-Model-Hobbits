@@ -7,7 +7,7 @@
 
 (setf *old* 1)
 
-(chunk-type state currentTask hobbitsLeft orcsLeft boatLeft plannedLeftHobbits plannedLeftOrcs)
+(chunk-type state currentTask hobbitsLeft orcsLeft boatLeft plannedLeftHobbits plannedLeftOrcs noBodyIsEatenLeft noBodyIsEatenRight)
 (chunk-type task hobbitsMove orcsMove boatMove)
 (chunk-type waypoint step hobbitsLeft orcsLeft )
 (chunk-type evaluateOptions target)
@@ -42,7 +42,6 @@
 		orcsLeft 			=o
 		!eval! (print 'search-move)
 		!eval! (print  (concatenate 'string (write-to-string =h) " H " (write-to-string =o) " O") )
-
 ==>
 	+retrieval>
 		ISA 				task
@@ -76,7 +75,7 @@
 )
 
 
-; we check our current planned move for validity
+; we check our current planned move for validity (number of Orcs or Hobbits doesn't exceed capacity of Orcs and Hobbits)
 ; i.e. THere are equal or more than 0 ORCS/HOBBITS on the left side of the river
 (p moveIsValid
 		!eval! (print  (concatenate 'string "valid-move >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
@@ -91,9 +90,75 @@
 		<= plannedLeftHobbits 	3
 ==>
 	=goal>
-		currentTask FUCKYEAHLETSDOIT
+		currentTask nobodyShouldGetEaten
 
 )
+
+(p testZeroHobbitsLeft
+		!eval! (print  (concatenate 'string "EAT ALL HOBBITS >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
+	=goal>
+		ISA 				state
+		currentTask			nobodyShouldGetEaten
+		plannedLeftHobbits 0
+==>
+	=>goal>
+		currentTask 		nobodyShouldGetEaten
+		noBodyIsEatenLeft   1
+)
+
+(p testEquilibriumOfHobbitsAndOrksLeft
+		!eval! (print  (concatenate 'string "EAT ALL HOBBITS >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
+	=goal>
+		ISA 				state
+		currentTask			nobodyShouldGetEaten
+		>= plannedLeftHobbits  plannedLeftOrcs
+==>
+	=>goal>
+		currentTask 		nobodyShouldGetEaten
+		noBodyIsEatenLeft   1
+)
+
+(p testZeroHobbitsRight
+		!eval! (print  (concatenate 'string "EAT ALL HOBBITS >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
+	=goal>
+		ISA 				state
+		currentTask			nobodyShouldGetEaten
+		noBodyIsEatenLeft  1
+		plannedLeftHobbits 0
+==>
+	=>goal>
+		currentTask 		nobodyShouldGetEaten
+		noBodyIsEatenLeft   1
+)
+
+(p testEquilibriumOfHobbitsAndOrksLeft
+		!eval! (print  (concatenate 'string "EAT ALL HOBBITS >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
+	=goal>
+		ISA 				state
+		currentTask			nobodyShouldGetEaten
+		>= plannedLeftHobbits  plannedLeftOrcs
+==>
+	=>goal>
+		currentTask 		nobodyShouldGetEaten
+		noBodyIsEatenLeft   1
+)
+
+
+
+
+
+
+(p moreOrks2
+		!eval! (print  (concatenate 'string "EAT ALL HOBBITS >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
+	=goal>
+		ISA 				state
+		currentTask			nobodyShouldGetEaten
+		< plannedRightHobbits plannedRightOrcs
+==>
+	=>goal>
+		currentTask 		nil 
+)
+
 
 (p moveIsInValid_Hobbits
 		!eval! (print 'invalid-move-HOBBITS)
