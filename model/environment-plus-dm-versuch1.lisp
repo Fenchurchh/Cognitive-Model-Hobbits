@@ -4,7 +4,6 @@
 (clear-all)
 (define-model env-model
 (sgp :esc t :lf .05 :ans 0.5 :trace-detail high)
-(act-r-noise 0.5)
 
 (setf *old* 1)
 
@@ -53,6 +52,7 @@
 
 
 (p modifyProblem
+		!eval! (print 'modify-move)
 	=goal>
 		ISA					state
 		currentTask 		findTask
@@ -60,14 +60,14 @@
 		orcsLeft 			=oldOrcsLeft
 		hobbitsLeft 		=h
 		orcsLeft 			=o
-		!eval! (print  (concatenate 'string (write-to-string =h) " H" (write-to-string =o) " O") )
+		!eval! (print  (concatenate 'string "IS " (write-to-string =h) " H" (write-to-string =o) " O") )
 	=retrieval>
 		ISA 				task
 		hobbitsMove 		=moveh
 		orcsMove			=moveo
 		!bind! 				=newHobbitsLeft (- =oldHobbitsLeft =moveh)
 		!bind! 				=newOrcsLeft (- =oldOrcsLeft =moveo)
-		!eval! (print  (concatenate 'string "> " (write-to-string =moveh) " H " (write-to-string =moveo) " O ") )
+		!eval! (print  (concatenate 'string ">> " (write-to-string =moveh) " H " (write-to-string =moveo) " O ") )
 ==>
 	=goal>
 		plannedLeftHobbits 	=newHobbitsLeft
@@ -99,6 +99,16 @@
 		ISA 				state
 		currentTask 		checkMovementForValidity
 		< plannedLeftHobbits 	0
+==>
+	=goal>
+		currentTask nil
+)
+
+(p moveIsInValid_Hobbits2
+		!eval! (print 'invalid-move-HOBBITS)
+	=goal>
+		ISA 				state
+		currentTask 		checkMovementForValidity
 		> plannedLeftHobbits 	4
 ==>
 	=goal>
@@ -112,6 +122,18 @@
 		ISA 				state
 		currentTask 		checkMovementForValidity
 		< plannedLeftOrcs 		0
+	
+==>
+	=goal>
+		currentTask nil
+)
+
+
+(p moveIsInvalid_Orcs2
+	!eval! (print 'invalid-move-ORCS)
+	=goal>
+		ISA 				state
+		currentTask 		checkMovementForValidity
 		> plannedLeftOrcs 		4
 	
 ==>
