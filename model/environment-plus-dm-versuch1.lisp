@@ -3,10 +3,10 @@
 
 (clear-all)
 (define-model env-model
-
-(sgp :esc t :lf .05 :trace-detail high)
+(sgp :esc t :lf .05 :ans 0.5 :trace-detail high)
 (act-r-noise 0.5)
 
+(setf *old* 1)
 
 (chunk-type state currentTask hobbitsLeft orcsLeft boatLeft plannedLeftHobbits plannedLeftOrcs)
 (chunk-type task hobbitsMove orcsMove boatMove)
@@ -14,9 +14,11 @@
 (chunk-type evaluateOptions target)
 
 
+
 (add-dm
 	(findTask ISA chunk)
 	(checkMovementForValidity ISA chunk)
+
 	(move10 ISA task hobbitsMove 1 orcsMove 0)
 	(move01 ISA task hobbitsMove 0 orcsMove 1)
 	(move11 ISA task hobbitsMove 1 orcsMove 1)
@@ -37,6 +39,10 @@
 	=goal>
 		ISA 				state
 		currentTask 		nil
+		hobbitsLeft 		=h
+		orcsLeft 			=o
+		!eval! (print 'search-move)
+		!eval! (print  (concatenate 'string (write-to-string =h) "H" (write-to-string =o) "O") )
 
 ==>
 	+retrieval>
@@ -49,7 +55,7 @@
 (p modifyProblem
 	=goal>
 		ISA					state
-		currentTask 		=findTask
+		currentTask 		findTask
 		hobbitsLeft			=oldHobbitsLeft
 		orcsLeft 			=oldOrcsLeft
 	=retrieval>
@@ -69,6 +75,7 @@
 ; we check our current planned move for validity
 ; i.e. THere are equal or more than 0 ORCS/HOBBITS on the left side of the river
 (p moveIsValid
+		!eval! (print 'valid-move)
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
@@ -81,6 +88,7 @@
 )
 
 (p moveIsInValid_Hobbits
+		!eval! (print 'invalid-move-HOBBITS)
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
@@ -91,11 +99,13 @@
 )
 
 
-(p moveIsInvalid_Orcs
+(p moveIsInvalid_Orcs	
+	!eval! (print 'invalid-move-ORCS)
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
 		< plannedLeftOrcs 		0
+	
 ==>
 	=goal>
 		currentTask nil
@@ -105,6 +115,7 @@
 ;; FUCK YEAH LETS DO IT
 ;; we move planned Movement into actual movement
 (p actualize
+		!eval! (print 'perform-move)
 	=goal>
 		ISA 				state
 		currentTask 		FUCKYEAHLETSDOIT
@@ -121,6 +132,7 @@
 
 
 (p judgeALL
+		!eval! (print 'are-we-done-yet)
 	=goal>
 		ISA 				state
 		currentTask			nil
@@ -129,7 +141,7 @@
 ==>
 	=goal>
 		currentTask			finish
-		!output! 			('DONE)
+		!eval! (print 'done)		
 )
 
 
