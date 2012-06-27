@@ -42,7 +42,7 @@
 		hobbitsLeft 		=h
 		orcsLeft 			=o
 		!eval! (print 'search-move)
-		!eval! (print  (concatenate 'string (write-to-string =h) "H" (write-to-string =o) "O") )
+		!eval! (print  (concatenate 'string (write-to-string =h) " H " (write-to-string =o) " O") )
 
 ==>
 	+retrieval>
@@ -58,12 +58,16 @@
 		currentTask 		findTask
 		hobbitsLeft			=oldHobbitsLeft
 		orcsLeft 			=oldOrcsLeft
+		hobbitsLeft 		=h
+		orcsLeft 			=o
+		!eval! (print  (concatenate 'string (write-to-string =h) " H" (write-to-string =o) " O") )
 	=retrieval>
 		ISA 				task
 		hobbitsMove 		=moveh
 		orcsMove			=moveo
 		!bind! 				=newHobbitsLeft (- =oldHobbitsLeft =moveh)
 		!bind! 				=newOrcsLeft (- =oldOrcsLeft =moveo)
+		!eval! (print  (concatenate 'string "> " (write-to-string =moveh) " H " (write-to-string =moveo) " O ") )
 ==>
 	=goal>
 		plannedLeftHobbits 	=newHobbitsLeft
@@ -81,6 +85,8 @@
 		currentTask 		checkMovementForValidity
 		> plannedLeftOrcs 		0
 		> plannedLeftHobbits 	0
+		< plannedLeftOrcs 		4
+		< plannedLeftHobbits 	4
 ==>
 	=goal>
 		currentTask FUCKYEAHLETSDOIT
@@ -93,6 +99,7 @@
 		ISA 				state
 		currentTask 		checkMovementForValidity
 		< plannedLeftHobbits 	0
+		> plannedLeftHobbits 	4
 ==>
 	=goal>
 		currentTask nil
@@ -105,6 +112,7 @@
 		ISA 				state
 		currentTask 		checkMovementForValidity
 		< plannedLeftOrcs 		0
+		> plannedLeftOrcs 		4
 	
 ==>
 	=goal>
