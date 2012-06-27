@@ -60,13 +60,13 @@
 		orcsLeft 			=oldOrcsLeft
 		hobbitsLeft 		=h
 		orcsLeft 			=o
-		!eval! (print  (concatenate 'string "IS " (write-to-string =h) " H" (write-to-string =o) " O") )
+		!eval! (print  (concatenate 'string "IS " (write-to-string =h) " H " (write-to-string =o) " O") )
 	=retrieval>
 		ISA 				task
 		hobbitsMove 		=moveh
 		orcsMove			=moveo
-		!bind! 				=newHobbitsLeft (- =oldHobbitsLeft =moveh)
-		!bind! 				=newOrcsLeft (- =oldOrcsLeft =moveo)
+		!bind! 				=newHobbitsLeft (+ =oldHobbitsLeft =moveh)
+		!bind! 				=newOrcsLeft (+ =oldOrcsLeft =moveo)
 		!eval! (print  (concatenate 'string ">> " (write-to-string =moveh) " H " (write-to-string =moveo) " O ") )
 ==>
 	=goal>
@@ -79,14 +79,16 @@
 ; we check our current planned move for validity
 ; i.e. THere are equal or more than 0 ORCS/HOBBITS on the left side of the river
 (p moveIsValid
-		!eval! (print 'valid-move)
+		!eval! (print  (concatenate 'string "valid-move >> " (write-to-string =h) " H " (write-to-string =o) " O ") )
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
-		> plannedLeftOrcs 		0
-		> plannedLeftHobbits 	0
-		< plannedLeftOrcs 		4
-		< plannedLeftHobbits 	4
+		plannedLeftHobbits  =h
+		plannedLeftOrcs		=o
+		>= plannedLeftOrcs 		0
+		>= plannedLeftHobbits 	0
+		<= plannedLeftOrcs 		3
+		<= plannedLeftHobbits 	3
 ==>
 	=goal>
 		currentTask FUCKYEAHLETSDOIT
@@ -109,7 +111,7 @@
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
-		> plannedLeftHobbits 	4
+		> plannedLeftHobbits 	3
 ==>
 	=goal>
 		currentTask nil
@@ -134,7 +136,7 @@
 	=goal>
 		ISA 				state
 		currentTask 		checkMovementForValidity
-		> plannedLeftOrcs 		4
+		> plannedLeftOrcs 		3
 	
 ==>
 	=goal>
@@ -162,7 +164,7 @@
 
 
 (p judgeALL
-		!eval! (print 'are-we-done-yet)
+		!eval! (print 'we-are-done-yet)
 	=goal>
 		ISA 				state
 		currentTask			nil
