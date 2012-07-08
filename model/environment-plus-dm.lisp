@@ -1,3 +1,5 @@
+(setf *decisions* nil)
+
 (defun start (number time)
 	(reset-all)
 	(dotimes (i number)
@@ -8,9 +10,9 @@
 		(print *times*))
 )
 
-(defun save-decision (hl hr ol or)
-	(let ((code (concatenate 'string (write-to-string hl) "H" (write-to-string ol) "O-" (write-to-string hr) "H" (write-to-string or) "O"))
-		  (judge (if (or (< hl ol) (< hr or)) 0 1)))
+(defun save-decision (hobbits-links hobbits-rechts orcs-links orcs-rechts)
+	(let ((code (concatenate 'string (write-to-string hobbits-links) "H" (write-to-string orcs-links) "O-" (write-to-string hobbits-rechts) "H" (write-to-string orcs-rechts) "O"))
+		  (judge (if (or (and (> hobbits-links 0) (> orcs-links hobbits-links)) (and (> hobbits-rechts 0) (> orcs-rechts hobbits-rechts))) 0 1)))
 		(setf *decisions* (acons code judge *decisions*)))
 )
 
@@ -28,48 +30,17 @@
 
 
 
-(define-model env-model2
+(define-model env-model
 
 (sgp :esc t :lf .05 :trace-detail high)
 
 
-(chunk-type state currentTask hobbitsLeft orcsleft boatLeft)
-(chunk-type task lastTask hobbitsMove orcsMove boatMove)
+(chunk-type state hl hr ol or)
+
 
 (add-dm
-	(move10 ISA task hobbitsMove 1 orcsMove 0)
-	(move01 ISA task hobbitsMove 0 orcsMove 1)
-	(move11 ISA task hobbitsMove 1 orcsMove 1)
-	(move20 ISA task hobbitsMove 2 orcsMove 0)
-	(move02 ISA task hobbitsMove 0 orcsMove 0)
- 
-	(goal isa state currentTask evaluateOptions hobbitsLeft 3 orcsLeft 3 boatLeft 1)
+	(test-state ISA state hl 2 hr 1 ol 2 or 1)
  )
-
-(p evaluateOptions
-	=goal>
-		ISA 	state
-		currentTask 	evaluateOptions
-	==>
-		=goal>
-			ISA 	state
-			currentTask findNewTask
-
-)
-
-
-(p findNewTask 
-	=goal>
-		ISA 	state
-		currentTask 	findNewTask
-
-	==>
-		=goal>
-			ISA state
-			currentTask searchingTask
-
-)
-
 
 (p start
    =goal>
@@ -102,5 +73,4 @@
 	
 )
 
-(goal-focus start)
 )
