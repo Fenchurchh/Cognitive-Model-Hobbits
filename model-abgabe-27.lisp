@@ -2,6 +2,7 @@
 (clear-all)
 (define-model env-model
 (sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :ult T)
+(sgp :do-not-harvest imaginal)
 
 (setf *old* 1)
 
@@ -37,7 +38,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    orcsLeft    		=o
    boatLeft    		=b
    !eval! (print  (concatenate 'string (write-to-string =h)
-(write-to-string =o) (write-to-string =b)) )
+	(write-to-string =o) (write-to-string =b)) )
+ 	!eval! (print (write-to-string 'START!))
 ==>
   =goal>
 		currentTask   	findTask
@@ -67,6 +69,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    =goal>
      ISA 			state
      currentTask 	find_new_solution
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask 	findTask
@@ -84,11 +88,14 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 	findTask
      boatLeft 		1
      >= hobbitsLeft 1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   	validateMove
      moveHobbits   	1
      moveOrcs      	0
+   =imaginal>
 )
 
 
@@ -98,6 +105,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 	findTask
      boatLeft 		1
      >= hobbitsLeft 2
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   	validateMove
@@ -113,6 +122,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      boatLeft 		1
      >= hobbitsLeft 1
      >= orcsLeft 	1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   	validateMove
@@ -127,6 +138,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 	findTask
      boatLeft 		1
      >= orcsLeft 	1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   	validateMove
@@ -141,6 +154,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 	findTask
      boatLeft 		1
      >= orcsLeft 	2
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   	validateMove
@@ -160,11 +175,14 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 		findTask
      boatLeft 			0
      >= hobbitsRight 	1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   		validateMove
      moveHobbits   		-1
      moveOrcs      		0
+   =imaginal>
 )
 
 
@@ -174,6 +192,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 		findTask
      boatLeft 			0
      >= hobbitsRight 	2
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   		validateMove
@@ -189,6 +209,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      boatLeft 			0
      >= hobbitsRight 	1
      >= orcsRight 		1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   		validateMove
@@ -203,6 +225,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 		findTask
      boatLeft 			0
      >= orcsRight 		1
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   		validateMove
@@ -217,6 +241,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      currentTask 		findTask
      boatLeft 			0
      >= orcsRight 		2
+   =imaginal>
+   	ISA 			notagain
 ==>
    =goal>
      currentTask   		validateMove
@@ -239,6 +265,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
      orcsRight   		=oldOrcsRight
      hobbitsLeft 		=oldHobbitsLeft
      hobbitsRight 		=oldHobbitsRight
+   =imaginal>
+   	ISA 			notagain
 ==>
    !bind!     =newHobbitsLeft (- =oldHobbitsLeft =movedHobbits)
    !bind!     =newOrcsLeft (- =oldOrcsLeft =movedOrcs)
@@ -264,6 +292,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkLeftSide
    plannedLeftHobbits   1
    > plannedLeftOrcs    1
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			find_new_solution
@@ -277,6 +307,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkLeftSide
    plannedLeftHobbits   2
    > plannedLeftOrcs   	2
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			find_new_solution
@@ -290,6 +322,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkLeftSide
    plannedLeftHobbits   1
    <= plannedLeftOrcs   1
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			checkRightSide
@@ -302,6 +336,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkLeftSide
    plannedLeftHobbits   2
    <= plannedLeftOrcs   2
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			checkRightSide
@@ -313,6 +349,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    ISA     				state
    currentTask   		checkLeftSide
    plannedLeftHobbits   3
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			checkRightSide
@@ -325,6 +363,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    ISA     				state
    currentTask   		checkLeftSide
    plannedLeftHobbits   0
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			checkRightSide
@@ -342,6 +382,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkRightSide
    plannedRightHobbits  1
    > plannedRightOrcs   1
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			find_new_solution
@@ -355,6 +397,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkRightSide
    plannedRightHobbits  2
    > plannedRightOrcs   2
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			find_new_solution
@@ -368,6 +412,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkRightSide
    plannedRightHobbits  1
    <= plannedRightOrcs  1
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			testforOldState
@@ -380,6 +426,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   		checkRightSide
    plannedRightHobbits  2
    <= plannedRightOrcs  2
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			testforOldState
@@ -391,6 +439,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    ISA     				state
    currentTask   		checkRightSide
    plannedRightHobbits  3
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			testforOldState
@@ -402,6 +452,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    ISA     				state
    currentTask   		checkRightSide
    plannedRightHobbits  0
+   =imaginal>
+   	ISA 			notagain
 ==>
   =goal>
    currentTask 			testforOldState
@@ -416,10 +468,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -435,10 +487,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -455,10 +507,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -475,10 +527,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -495,10 +547,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -515,10 +567,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -535,10 +587,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -555,10 +607,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -575,10 +627,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -595,10 +647,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -615,10 +667,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -635,10 +687,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -655,10 +707,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 	-	oldhobbitsLeft		=hl
@@ -675,10 +727,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -695,10 +747,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -715,10 +767,10 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 				state
 		currentTask			testforOldState
-		hobbitsLeft			=hl
-		hobbitsRight		=hr
-		orcsLeft			=ol
-		orcsRight			=or
+		plannedLeftHobbits		=hl
+		plannedRightHobbits		=hr
+		plannedLeftOrcs			=ol
+		plannedRightOrcs		=or
 	=imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
@@ -749,8 +801,12 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 		plannedRightHobbits =newHobbitsRight
 		plannedRightOrcs    =newOrcsRight
 		boatLeft            =boatLeft
+   =imaginal>
+   	ISA 			notagain
 ==>	
-	!bind!     =newBoatLeft (mod (+ =boatLeft 1) 2) ;; flip between 0 and 1
+	!bind!     =newBoatLeft (mod (+ =boatLeft 1) 2) ;; flip between 0 and 1   
+	!eval! (print  (concatenate 'string (write-to-string =newHobbitsLeft)
+	(write-to-string =newOrcsLeft) (write-to-string =newBoatLeft)) )
 	=goal>
        currentTask   		find_new_solution
        hobbitsLeft 			=newHobbitsLeft
@@ -768,6 +824,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=imaginal>
 		ISA					notagain
 ==>
+!eval! (print (write-to-string 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss))
 	=goal>
        currentTask   		find_new_solution
 )
