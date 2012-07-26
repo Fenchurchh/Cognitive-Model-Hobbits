@@ -1,7 +1,7 @@
 
 (clear-all)
 (define-model env-model
-(sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :ult T)
+(sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :ult nil :alpha 0.7)
 (sgp :do-not-harvest imaginal)
 
 (setf *old* 1)
@@ -65,7 +65,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
    currentTask   	nil
 )
 
-(p anotherAproach
+(p anotherApproach
    =goal>
      ISA 			state
      currentTask 	find_new_solution
@@ -500,7 +500,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid2
@@ -520,7 +520,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid3
@@ -540,7 +540,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid4
@@ -560,7 +560,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid5
@@ -580,7 +580,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid6
@@ -600,7 +600,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid7
@@ -620,7 +620,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid
@@ -640,7 +640,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 	
 (p testforOldState-valid8
@@ -660,7 +660,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid9
@@ -680,7 +680,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid10
@@ -700,7 +700,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid11
@@ -720,7 +720,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid12
@@ -740,7 +740,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid13
@@ -760,7 +760,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 
 (p testforOldState-valid14
@@ -780,7 +780,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
 	=goal>
 		currentTask			actualizeWorld
-	-imaginal>
+	
 )
 	
 ;;
@@ -808,7 +808,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	!eval! (print  (concatenate 'string (write-to-string =newHobbitsLeft)
 	(write-to-string =newOrcsLeft) (write-to-string =newBoatLeft)) )
 	=goal>
-       currentTask   		find_new_solution
+       currentTask   		acceptWorld
        hobbitsLeft 			=newHobbitsLeft
        orcsLeft    			=newOrcsLeft
        hobbitsRight  		=newHobbitsRight
@@ -821,10 +821,20 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=goal>
 		ISA 			state
 		currentTask 	acceptWorld
+		hobbitsLeft			=hl
+		hobbitsRight		=hr
+		orcsLeft			=ol
+		orcsRight			=or
 	=imaginal>
 		ISA					notagain
 ==>
 !eval! (print (write-to-string 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss))
+	+imaginal>
+		ISA					notagain
+		oldhobbitsLeft		=hl
+		oldhobbitsRight		=hr
+		oldorcsLeft			=ol
+	 	oldorcsRight		=or
 	=goal>
        currentTask   		find_new_solution
 )
@@ -843,7 +853,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 (spp RIGHT_transformationNullTwo :u 5)
 
 
-;(spp anotherAproach :reward 0)
-;(spp actualizeWorld :reward 10)
+(spp actualizeWorld :reward 10)
+(spp anotherApproach :reward 0)
 
 )
