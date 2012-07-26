@@ -1,7 +1,7 @@
 
 (clear-all)
 (define-model env-model
-(sgp :esc t :lf .05  :ans 0.55 :ul T  :trace-detail low :ult T)
+(sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :ult T)
 
 (setf *old* 1)
 
@@ -769,6 +769,17 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 )
 
 (goal-focus goal)
+
+(spp transformationOneNull :u wenig)
+(spp transformationTwoNull :u viel)
+(spp transformationOneOne :u viel)
+(spp transformationNullOne :u wenig)
+(spp transformationNullTwo :u viel)
+(spp RIGHT_transformationOneNull :u viel)
+(spp RIGHT_transformationTwoNull :u wenig)
+(spp RIGHT_transformationOneOne :u wenig)
+(spp RIGHT_transformationNullOne :u viel)
+(spp RIGHT_transformationNullTwo :u wenig)
 
 (spp anotherAproach :reward 0)
 (spp actualizeWorld :reward 0)
