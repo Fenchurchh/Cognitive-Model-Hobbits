@@ -43,9 +43,9 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 		currentTask   	findTask
   +imaginal>
 		ISA					notagain
-		oldhobbitsLeft		0
+		oldhobbitsLeft		3
 		oldhobbitsRight		0
-		oldorcsLeft			0
+		oldorcsLeft			3
 		oldorcsRight		0
 )
 
@@ -154,8 +154,6 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ;;;
 
 
-
-
 (p RIGHT_transformationOneNull
    =goal>
      ISA 				state
@@ -244,7 +242,7 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 ==>
    !bind!     =newHobbitsLeft (- =oldHobbitsLeft =movedHobbits)
    !bind!     =newOrcsLeft (- =oldOrcsLeft =movedOrcs)
-   !bind!     =newHobbitsRight (+ =oldOrcsRight =movedHobbits)
+   !bind!     =newHobbitsRight (+ =oldHobbitsRight =movedHobbits)
    !bind!     =newOrcsRight (+ =oldOrcsRight =movedOrcs)
    =goal>
      currentTask         checkLeftSide
@@ -753,12 +751,6 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 		boatLeft            =boatLeft
 ==>	
 	!bind!     =newBoatLeft (mod (+ =boatLeft 1) 2) ;; flip between 0 and 1
-	+imaginal>
-		ISA					notagain
-		oldhobbitsLeft		=hl
-		oldhobbitsRight		=hr
-		oldorcsLeft			=ol
-		oldorcsRight		=or
 	=goal>
        currentTask   		find_new_solution
        hobbitsLeft 			=newHobbitsLeft
@@ -768,19 +760,31 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
        boatLeft      		=newBoatLeft
 )
 
+;; we create a new mental model of our old world in the imaginary
+(p copyWorld
+	=goal>
+		ISA 			state
+		currentTask 	acceptWorld
+	=imaginal>
+		ISA					notagain
+==>
+	=goal>
+       currentTask   		find_new_solution
+)
+
 (goal-focus goal)
 
-(spp transformationOneNull :u wenig)
-(spp transformationTwoNull :u viel)
-(spp transformationOneOne :u viel)
-(spp transformationNullOne :u wenig)
-(spp transformationNullTwo :u viel)
-(spp RIGHT_transformationOneNull :u viel)
-(spp RIGHT_transformationTwoNull :u wenig)
-(spp RIGHT_transformationOneOne :u wenig)
-(spp RIGHT_transformationNullOne :u viel)
-(spp RIGHT_transformationNullTwo :u wenig)
+(spp transformationOneNull :u 5)
+(spp transformationTwoNull :u 10)
+(spp transformationOneOne :u 10)
+(spp transformationNullOne :u 5)
+(spp transformationNullTwo :u 10)
+(spp RIGHT_transformationOneNull :u 10)
+(spp RIGHT_transformationTwoNull :u 5)
+(spp RIGHT_transformationOneOne :u 5)
+(spp RIGHT_transformationNullOne :u 10)
+(spp RIGHT_transformationNullTwo :u 5)
 
-(spp anotherAproach :reward 0)
-(spp actualizeWorld :reward 0)
+;(spp anotherAproach :reward 0)
+;(spp actualizeWorld :reward 10)
 )
