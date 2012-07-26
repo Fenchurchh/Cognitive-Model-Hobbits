@@ -785,6 +785,8 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 (spp RIGHT_transformationNullOne :u 10)
 (spp RIGHT_transformationNullTwo :u 5)
 
+
 ;(spp anotherAproach :reward 0)
 ;(spp actualizeWorld :reward 10)
+
 )
