@@ -1,10 +1,16 @@
 
 (clear-all)
+
+
+
 (define-model env-model
-(sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :ult nil :alpha 0.7)
+(sgp :esc t :lf .05  :ans 0.55 :bll 1 :ul T  :trace-detail low :trace-filter nil :ult nil :alpha 0.7)
 (sgp :do-not-harvest imaginal)
 
 (setf *old* 1)
+
+
+
 
 (chunk-type state currentTask hobbitsLeft hobbitsRight orcsLeft
 orcsRight boatLeft plannedLeftHobbits plannedRightHobbits
@@ -828,7 +834,6 @@ hobbitsRight 0 orcsRight 0  boatLeft 1 moveOrcs 0 moveHobbits 0 )
 	=imaginal>
 		ISA					notagain
 ==>
-!eval! (print (write-to-string 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss))
 	+imaginal>
 		ISA					notagain
 		oldhobbitsLeft		=hl
